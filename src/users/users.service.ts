@@ -5,6 +5,7 @@ import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from 'src/jwt/jwt.service';
+import { EditProfileInput } from './dtos/edit-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -14,10 +15,10 @@ export class UserService {
   ) {}
 
   async createAccount({
-    email,
-    password,
-    role,
-  }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
+                        email,
+                        password,
+                        role,
+                      }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
     try {
       const exists = await this.users.findOne({ email });
       if (exists) {
@@ -31,9 +32,9 @@ export class UserService {
   }
 
   async login({
-    email,
-    password,
-  }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
+                email,
+                password,
+              }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
     // make a JWT and give it to the user
     try {
       const user = await this.users.findOne({ email });
@@ -65,5 +66,9 @@ export class UserService {
 
   async findById(id: number): Promise<User> {
     return this.users.findOne({ id });
+  }
+
+  async editProfile(userId: number, editProfileInput: EditProfileInput) {
+    return this.users.update(userId, { ...editProfileInput });
   }
 }
