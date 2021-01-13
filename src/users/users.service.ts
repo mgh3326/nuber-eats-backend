@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as jwt from 'jsonwebtoken';
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
@@ -16,10 +14,10 @@ export class UserService {
   ) {}
 
   async createAccount({
-                        email,
-                        password,
-                        role,
-                      }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
+    email,
+    password,
+    role,
+  }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
     try {
       const exists = await this.users.findOne({ email });
       if (exists) {
@@ -33,9 +31,9 @@ export class UserService {
   }
 
   async login({
-                email,
-                password,
-              }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
+    email,
+    password,
+  }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
     // make a JWT and give it to the user
     try {
       const user = await this.users.findOne({ email });
