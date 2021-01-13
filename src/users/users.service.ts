@@ -15,10 +15,10 @@ export class UserService {
   ) {}
 
   async createAccount({
-                        email,
-                        password,
-                        role,
-                      }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
+    email,
+    password,
+    role,
+  }: CreateAccountInput): Promise<{ ok: boolean; error?: string }> {
     try {
       const exists = await this.users.findOne({ email });
       if (exists) {
@@ -32,9 +32,9 @@ export class UserService {
   }
 
   async login({
-                email,
-                password,
-              }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
+    email,
+    password,
+  }: LoginInput): Promise<{ ok: boolean; error?: string; token?: string }> {
     // make a JWT and give it to the user
     try {
       const user = await this.users.findOne({ email });
@@ -68,7 +68,17 @@ export class UserService {
     return this.users.findOne({ id });
   }
 
-  async editProfile(userId: number, editProfileInput: EditProfileInput) {
-    return this.users.update(userId, { ...editProfileInput });
+  async editProfile(
+    userId: number,
+    { email, password }: EditProfileInput,
+  ): Promise<User> {
+    const user = await this.users.findOne(userId);
+    if (email) {
+      user.email = email;
+    }
+    if (password) {
+      user.password = password;
+    }
+    return this.users.save(user);
   }
 }
