@@ -20,10 +20,10 @@ export class MailService {
       'from',
       `Nico from Nuber Eats <mailgun@${this.options.domain}>`,
     );
-    form.append('to', `nico@nomadcoders.co`);
+    form.append('to', `mgh3326@naver.com`);
     form.append('subject', subject);
     form.append('template', template);
-    emailVars.forEach(eVar => form.append(`v:${eVar.key}`, eVar.value));
+    emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
     try {
       await got(`https://api.mailgun.net/v3/${this.options.domain}/messages`, {
         method: 'POST',
