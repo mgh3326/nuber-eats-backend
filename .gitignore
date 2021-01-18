@@ -65,3 +65,4 @@ typings/
 
 # Project exclude paths
 /dist/
+.DS_Store
