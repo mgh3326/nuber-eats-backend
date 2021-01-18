@@ -23,10 +23,10 @@ export class UserService {
   ) {}
 
   async createAccount({
-                        email,
-                        password,
-                        role,
-                      }: CreateAccountInput): Promise<CreateAccountOutput> {
+    email,
+    password,
+    role,
+  }: CreateAccountInput): Promise<CreateAccountOutput> {
     try {
       const exists = await this.users.findOne({ email });
       if (exists) {
@@ -123,7 +123,8 @@ export class UserService {
       );
       if (verification) {
         verification.user.verified = true;
-        this.users.save(verification.user);
+        await this.users.save(verification.user);
+        await this.verifications.delete(verification.id);
         return { ok: true };
       }
       return { ok: false, error: 'Verification not found.' };
