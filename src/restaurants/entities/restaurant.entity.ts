@@ -9,30 +9,35 @@ import { Category } from './cetegory.entity';
 @ObjectType()
 @Entity()
 export class Restaurant extends CoreEntity {
-  @Field((type) => String)
+  @Field(type => String)
   @Column()
   @IsString()
   @Length(5)
   name: string;
 
-  @Field((type) => String)
+  @Field(type => String)
   @Column()
   @IsString()
   coverImg: string;
 
-  @Field((type) => String, { defaultValue: '강남' })
+  @Field(type => String, { defaultValue: '강남' })
   @Column()
   @IsString()
   address: string;
 
-  @Field((type) => Category, { nullable: true })
-  @ManyToOne((type) => Category, (category) => category.restaurants, {
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
+  @Field(type => Category, { nullable: true })
+  @ManyToOne(
+    type => Category,
+    category => category.restaurants,
+    { nullable: true, onDelete: 'SET NULL' },
+  )
   category: Category;
 
-  @Field((type) => User)
-  @ManyToOne((type) => User, (user) => user.restaurants)
+  @Field(type => User)
+  @ManyToOne(
+    type => User,
+    user => user.restaurants,
+    { onDelete: 'CASCADE' },
+  )
   owner: User;
 }
