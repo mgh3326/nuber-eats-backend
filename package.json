@@ -33,7 +33,7 @@
     "apollo-server-express": "2.21.0",
     "bcrypt": "5.0.0",
     "class-transformer": "0.3.2",
-    "class-validator": "0.12.2",
+    "class-validator": "0.14.1",
     "cross-env": "7.0.3",
     "form-data": "3.0.0",
     "got": "11.8.1",
